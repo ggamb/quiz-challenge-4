@@ -2,9 +2,44 @@
     background-color: wheat;
 }
 
+header {
+    margin: 5px 0;
+}
+
 
 .flex-row {
     display: flex;
     justify-content: space-between;
     align-items: center;
+}
+
+.container {
+    width: 100%;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.question {
+    color: indigo;
+    text-align: center;
+    font-size: 50px;
+    width: 50%;
+    flex-grow: 50%;
+    padding-bottom: 20px;
+}
+
+.answer-choice {
+    border-radius: 30px;
+    width: 400px;
+    background-color: peru;
+    margin: 10px;
+    padding: 10px;
+    text-align: left;
+}
+
+.answer-choice:hover {
+    background-color: palegreen;
+    transition: 200ms;
 }
