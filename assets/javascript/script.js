@@ -7,28 +7,30 @@ var answerElThree = document.getElementById("answer-choice-3");
 var answerElFour = document.getElementById("answer-choice-4");
 var answerElFive = document.getElementById("answer-choice-5");
 var answerEls = document.querySelector(".container");
+var index = 0;
+
 
 var questionArray = [
     {
-        question: "What is your favorite color?", 
-        answerChoices: "blue/red/green/orange/purple",
-        a: "red"
+        question: "What is your name?", 
+        answerChoices: "Sir Lancelot of Camelot/Tyrant King George the Third/A Knight who says Nee/Sir Robin of Camelot/Sir Galahad of Camelot",
+        a: "Sir Lancelot of Camelot"
     }, {
-        question: "What is your least favorite color?", 
-        answerChoices: "blue/red/green/orange/purple",
-        a: "blue"
+        question: "What is your quest?", 
+        answerChoices: "Fame and fortune/Honestly, I don't know/Knowledge/To seek the Holy Grail/Immortality",
+        a: "To seek the Holy Grail"
     },  {
         question: "What is your favorite color?", 
-        answerChoices: "blue/red/green/orange/purple",
-        a: "red"
+        answerChoices: "orange/red/green/blue/purple",
+        a: "blue"
     }, {
-        question: "What is your favorite color?", 
-        answerChoices: "blue/red/green/orange/purple",
-        a: "red"
+        question: "What is you the capital of Assyria?", 
+        answerChoices: "What is Assyria?/Babylon/Memphis/Assur/Ur",
+        a: "Assur"
     }, {
-        question: "What is your favorite color?", 
-        answerChoices: "blue/red/green/orange/TESTESTEST",
-        a: "red"
+        question: "What is the air-speed velocity of an unladen swallow?", 
+        answerChoices: "Very fast!/Not too fast/An average speed/Slow./Huh...I don't know that",
+        a: "Huh...I don't know that"
     }
 ];
 
@@ -49,14 +51,10 @@ function startTimer() {
 
 
 function setAnswerChoices() {
-    
-    for(var i = 0 ; i < questionArray.length; i++){
-        questionEl.textContent = questionArray[i].question;
-
-        splitAnswerChoices(questionArray[i].answerChoices);
-
-        checkAnswer(questionArray[i].a);
-    }
+    questionEl.textContent = questionArray[index].question;
+    splitAnswerChoices(questionArray[index].answerChoices);
+    console.log(index);
+    console.log(questionArray[index]);
 };
 
 function splitAnswerChoices(selectedQuestion) {
@@ -71,10 +69,11 @@ function splitAnswerChoices(selectedQuestion) {
     return;
 };
 
+/*
 function checkAnswer(correctAnswer) {
     console.log("we got here");
     
-    var userChoice = getInput(); //fix this somehow
+    var userChoice = answerEls.addEventListener('click', getInput);
 
     console.log(userChoice);
 
@@ -83,16 +82,22 @@ function checkAnswer(correctAnswer) {
     } else {
         console.log("false!");
     }
-};
+};*/
 
 function getInput(event){
     var userChoice = event.target.textContent;
     console.log(userChoice);
-    return userChoice;
+    if(questionArray[index].a === userChoice){
+        console.log("correct!");
+    } else {
+        console.log("false!");
+    }
+    index++;
+    setAnswerChoices();
 };
 
 
 startButton.onclick = startTimer;
 setAnswerChoices();
-splitAnswerChoices();
-answerEls.addEventListener('click', getInput);
+//splitAnswerChoices();
+var userCorrect = answerEls.addEventListener('click', getInput);
