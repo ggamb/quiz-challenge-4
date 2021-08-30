@@ -21,15 +21,15 @@ var questionArray = [
         a: "To seek the Holy Grail"
     },  {
         question: "What is your favorite color?", 
-        answerChoices: "orange/red/green/blue/purple",
-        a: "blue"
+        answerChoices: "Orange/Red/Green/Blue/Purple",
+        a: "Blue"
     }, {
         question: "What is you the capital of Assyria?", 
         answerChoices: "What is Assyria?/Babylon/Memphis/Assur/Ur",
         a: "Assur"
     }, {
         question: "What is the air-speed velocity of an unladen swallow?", 
-        answerChoices: "Very fast!/Not too fast/An average speed/Slow./Huh...I don't know that",
+        answerChoices: "Very fast!/Not too fast/An average speed/Slow/Huh...I don't know that",
         a: "Huh...I don't know that"
     }
 ];
@@ -51,10 +51,14 @@ function startTimer() {
 
 
 function setAnswerChoices() {
-    questionEl.textContent = questionArray[index].question;
-    splitAnswerChoices(questionArray[index].answerChoices);
-    console.log(index);
-    console.log(questionArray[index]);
+
+    if(index < 5) {
+        questionEl.textContent = questionArray[index].question;
+        splitAnswerChoices(questionArray[index].answerChoices);
+    } else {
+        loadScores();
+    }
+
 };
 
 function splitAnswerChoices(selectedQuestion) {
@@ -69,31 +73,21 @@ function splitAnswerChoices(selectedQuestion) {
     return;
 };
 
-/*
-function checkAnswer(correctAnswer) {
-    console.log("we got here");
-    
-    var userChoice = answerEls.addEventListener('click', getInput);
-
-    console.log(userChoice);
-
-    if(correctAnswer === userChoice){
-        console.log("correct!");
-    } else {
-        console.log("false!");
-    }
-};*/
 
 function getInput(event){
     var userChoice = event.target.textContent;
     console.log(userChoice);
     if(questionArray[index].a === userChoice){
-        console.log("correct!");
+        console.log("correct!"); //add time increase and append child telling user they were correct
     } else {
         console.log("false!");
     }
     index++;
     setAnswerChoices();
+};
+
+function loadScores(){
+    window.location.href = "./assets/html/score.html";
 };
 
 
