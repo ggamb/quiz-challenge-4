@@ -7,7 +7,9 @@ var answerElThree = document.getElementById("answer-choice-3");
 var answerElFour = document.getElementById("answer-choice-4");
 var answerElFive = document.getElementById("answer-choice-5");
 var answerEls = document.querySelector(".container");
+var answerResult = document.getElementById("answer-result");
 var index = 0;
+var timeRemaining = 100;
 
 
 var questionArray = [
@@ -36,8 +38,6 @@ var questionArray = [
 
 
 function startTimer() {
-    var timeRemaining = 5;
-
     var timerInterval = setInterval(function(){
 
         if(timeRemaining>=0){
@@ -45,6 +45,7 @@ function startTimer() {
             timeRemaining--;
         } else {
             clearInterval(timerInterval);
+            loadScores();
         }
     }, 1000);
 };
@@ -76,10 +77,16 @@ function splitAnswerChoices(selectedQuestion) {
 
 function getInput(event){
     var userChoice = event.target.textContent;
-    console.log(userChoice);
+
     if(questionArray[index].a === userChoice){
-        console.log("correct!"); //add time increase and append child telling user they were correct
+        timeRemaining += 10;
+        answerResult.textContent = "Question " + (index+1) + " is correct!"; // add CSS
+        answerEls.appendChild(answerResult);
+        console.log("correct!");
     } else {
+        timeRemaining -= 10;
+        answerResult.textContent = "Question " + (index+1) + " is incorrect!"; //add CSS
+        answerEls.appendChild(answerResult);
         console.log("false!");
     }
     index++;
@@ -94,4 +101,4 @@ function loadScores(){
 startButton.onclick = startTimer;
 setAnswerChoices();
 //splitAnswerChoices();
-var userCorrect = answerEls.addEventListener('click', getInput);
+answerEls.addEventListener('click', getInput);
