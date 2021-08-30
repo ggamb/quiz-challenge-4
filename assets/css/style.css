@@ -42,4 +42,12 @@ header {
 .answer-choice:hover {
     background-color: palegreen;
     transition: 200ms;
+    border-radius: 30px;
+}
+
+.answer-result {
+    color: red;
+    font-size: larger;
+    font-weight: bold;
+    font-family: 'Courier New', Courier, monospace;
 }
