@@ -9,40 +9,61 @@
 </head>
 
 <body>
+    <div id = "quiz">
+        <header class="flex-row">
+            <div>
+                <a href="./assets/html/score.html">View High Scores</a>
+            </div>
+            <h2 id="timer"></h2>
+        </header>
 
-    <header class="flex-row">
-        <div>
-            <a href="./assets/html/score.html">View High Scores</a>
-        </div>
-        <h2 id="timer"></h2>
-    </header>
-    
-    <body>
-        <div>
-            <h3 class="count-of-three">
-                Push the start button and on the count of three, no more, no less, 
-                Three shall be the number thou button count, and the number of the counting shall be three. 
-                Four shalt thou not count, neither count thou two, excepting that thou then proceed to three. 
-                Five is right out. Once the number three, being the third number, be reached, 
-                then lobbest thou thy Holy Hand Grenade of Antioch towards thy foe, who, being naughty in My sight, shall snuff it.
-            </h3>
-        </div>
-        <button id="start">Start</button>
-        <div id="block-questions"></div>
-        <div class="question" id="question"></div>
-        <div class="container">
-            <div class="answer-choice" id="answer-choice-1"></div>
-            <div class="answer-choice" id="answer-choice-2"></div>
-            <div class="answer-choice" id="answer-choice-3"></div>
-            <div class="answer-choice" id="answer-choice-4"></div>
-            <div class="answer-choice" id="answer-choice-5"></div>
-            <div class="answer-result" id="answer-result"></div>
+            <div>
+                <h3 class="count-of-three">
+                    Push the start button and on the count of three, no more, no less, 
+                    Three shall be t he number thou button count, and the number of the counting shall be three. 
+                    Four shalt thou not count, neither count thou two, excepting that thou then proceed to three. 
+                    Five is right out. Once the number three, being the third number, be reached, 
+                    then lobbest thou thy Holy Hand Grenade of Antioch towards thy foe, who, being naughty in My sight, shall snuff it.
+                </h3>
+            </div>
+            <button id="start">Start</button>
+            <div id="block-questions"></div>
+            <div class="question" id="question"></div>
+            <div class="container">
+                <div class="answer-choice" id="answer-choice-1"></div>
+                <div class="answer-choice" id="answer-choice-2"></div>
+                <div class="answer-choice" id="answer-choice-3"></div>
+                <div class="answer-choice" id="answer-choice-4"></div>
+                <div class="answer-choice" id="answer-choice-5"></div>
+                <div class="answer-result" id="answer-result"></div>
+            </div>
+    </div>
+    <br/>
+
+    <div id="showInitials" class="hidden">
+        <div id="initials-container">
+            Your initials here:
+            <form action="" >
+                <label></label>
+                <input type="text" id = "typeInitials" max="3">
+                <button id="initialSubmit">Submit</button>
+            </form>
         </div>
         <br/>
+        
+        <div id="score-results" class="score-results"></div>
+    
+        <div id="high-scores">
+            <form action=""></form>
+        </div>
+
+
+    </div>
         
     </body>
 
 
+
+
     <script src = "./assets/javascript/script.js"></script>
-</body>
 </html>

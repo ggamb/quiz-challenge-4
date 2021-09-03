@@ -13,6 +13,10 @@ var answerEls = document.querySelector(".container");
 var answerResult = document.getElementById("answer-result");
 var playAgainEl = document.getElementById("goAgain");
 var scoreResultsEl = document.getElementById("score-results");
+var quizEl = document.getElementById("quiz");
+var showInitialsEl = document.getElementById("showInitials").style;
+var initialButtonEl = document.getElementById("initialSubmit");
+
 
 //Global variable to control which question appears
 var index = 0;
@@ -52,7 +56,7 @@ var questionArray = [
 
 //starts joke timer and leads to function to start game timer
 function timerStart() {
-    var count = 1;
+    var count = 3; //Change back to 1 after finishing
     var timerInterval = setInterval(function(){
         if(count < 3){
             startButton.textContent = count;
@@ -63,13 +67,13 @@ function timerStart() {
         } else {
             timerEl.textContent = "Seconds remaining: " + timeRemaining;
             clearInterval(timerInterval);
-            startTimer();
+            startGameTimer();
         }
     }, 1000);
 }
 
-//Gam timer function
-function startTimer() {
+//Game timer function
+function startGameTimer() {
     blockerEl.remove();
     startButton.remove();
     headerTextEl.remove();
@@ -130,8 +134,15 @@ function getInput(event){
     }
 
     //Increases index after the passthrough and calls setAnswerChoices() to set up the next question
-    index++;
-    setAnswerChoices();
+    //If the question is the last in the array, the input to enter initials pop up after answering
+    if(index < 4) {
+        index++;
+        setAnswerChoices();
+    } else {
+        quizEl.remove();
+        console.log("we got here");
+        showInitialsEl.display = "flex";
+    }
 };
 
 //Loads the webpage with user's high scores
@@ -147,15 +158,32 @@ function getHighScore(){
     }
     console.log(highScore);
     console.log(score);
-    if(scoreResultsEl){
-        scoreResultsEl.textContent = "High Score: " + localStorage.getItem("highscore");
-    }
-    
-    loadScores();
+
 };
 
-function loadScores() {
-    window.location.href = "./assets/html/score.html";
+function loadScores(event) {
+    event.preventDefault();
+
+    if(scoreResultsEl){
+        scoreResultsEl.textContent = "High Score: " + localStorage.getItem("highscore");
+        console.log(scoreResultsEl.textContent);
+    }
+    
+}
+
+
+
+
+
+function initialSubmit(event) {
+    var initials = document.getElementById("typeInitials").value;
+    var initialButtonEl = document.getElementById("initialSubmit");
+    console.log(initials);
+    initialButtonEl.onclick("click", function(){
+        event.preventDefault();
+
+        getHighScore();
+    });
 }
 
 //Listeners and functions to start posting questions
@@ -163,3 +191,5 @@ startButton.onclick = timerStart;
 setAnswerChoices();
 //splitAnswerChoices();
 answerEls.addEventListener('click', getInput);
+initialButtonEl.addEventListener('click', loadScores);
+

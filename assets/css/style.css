@@ -6,11 +6,19 @@ header {
     margin: 5px 0;
 }
 
+.hidden {
+    display: none;
+    width: 100%;
+    margin: 25px 30%;
+}
+
+.score-results {
+    
+}
 
 .flex-row {
     display: flex;
     justify-content: space-between;
-    align-items: center;
 }
 
 .container {
