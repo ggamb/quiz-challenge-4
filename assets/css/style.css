@@ -13,7 +13,6 @@ header {
 }
 
 
-
 .flex-row {
     display: flex;
     justify-content: space-between;
@@ -95,6 +94,13 @@ header {
 
 #initialsContainer {
     align-self: flex-end;
+}
+
+#scores:first-child {
+    text-decoration: mediumblue;
+    font-size: larger;
+    font-family: 'Times New Roman', Times, serif;
+    font-weight: bold;
 }
 
 .score-results {

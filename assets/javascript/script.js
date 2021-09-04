@@ -190,7 +190,6 @@ function getInitials(event) {
     showScoresEl.textContent = "Initials: " + initials.value + " | Your Score: " + localStorage.getItem("score");
 
     showScores(initials.value, localStorage.getItem("score"));
-
 }
 
 function showScores(userInitials, UserScore) {
