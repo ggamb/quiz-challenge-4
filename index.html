@@ -43,14 +43,14 @@
     <div id="showInitials" class="hidden">
         <div id="initials-container">
             Your initials here:
-            <form action="" >
+            <form action="" id="initialForm">
                 <label></label>
                 <input type="text" id = "typeInitials" max="3">
-                <button id="initialSubmit" onclick="getInitials(); this.onclick=null;">Submit</button>
+                <button id="initialSubmit">Submit</button>
             </form>
         </div>
         <br/>
-        
+         
         <div id="score-results" class="score-results"></div>
     
         <div id="high-scores">
@@ -59,6 +59,12 @@
         
     </div>
     <div id = "scores" class="show-scores"></div>
+    <span class="hidden">
+        <button id="play-again"> Play Again</button>
+        <button id="clear-scores">Clear Scores</button>
+    </span>
+    
+    
 
     
         

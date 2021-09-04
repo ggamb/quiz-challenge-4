@@ -18,7 +18,9 @@ var showInitialsEl = document.getElementById("showInitials").style;
 var initialButtonEl = document.getElementById("initialSubmit");
 var initials = document.getElementById("typeInitials");
 var showScoresEl = document.getElementById("scores");
-
+var initialFormEl = document.getElementById("initialForm");
+var playAgainEl = document.getElementById("play-again");
+var viewScoresEl = document.getElementById("view-scores");
 
 //Global variable to control which question appears
 var index = 0;
@@ -151,18 +153,20 @@ function getInput(event){
         console.log("we got here");
         showInitialsEl.display = "flex";
         finalScore = timeRemaining;
+        localStorage.setItem("score", finalScore);
         getHighScore();
     }
 };
 
 //Loads the webpage with user's high scores
 function getHighScore(){    
+    console.log(finalScore);
     var score = parseInt(finalScore);
     var highScore = localStorage.getItem("highscore");
     if(highScore !== null){
         if (score > highScore) {
             localStorage.setItem("highscore", score);   
-            scoreResultsEl.textContent = "Congrats on the high score! Your new high hcore: " + score;
+            scoreResultsEl.textContent = "Congrats on the high score! Your new high score: " + score;
         }
     } else{
         localStorage.setItem("highscore", score);
@@ -173,20 +177,14 @@ function getHighScore(){
         scoreResultsEl.textContent = "High Score: " + localStorage.getItem("highscore");
         console.log(scoreResultsEl.textContent);
     }
-
-    getInitials();
-
 };
 
 function getInitials(event) { 
 
     event.preventDefault();
-
-    if(initials.value !== ""){
-        initialButtonEl.removeEventListener("click", getInitials);
-    }
+    initialButtonEl.remove();
     
-    //showScoresEl.textContent = "Initials: " + initials.value + " | Your Score: " + finalScore;
+    showScoresEl.textContent = "Initials: " + initials.value + " | Your Score: " + localStorage.getItem("score");
 
     showScores(initials.value, finalScore);
 
@@ -206,13 +204,21 @@ function showScores(userInitials, UserScore) {
 
     console.log(scoresArray);
 
+    localStorage.setItem("scoresArray", JSON.stringify(scoresArray));
+
     for(var i = 0; i < scoresArray.length; i++){
+        console.log("we got to the loop");
         var newScoreEl = document.createElement("div");
         newScoreEl.className = "score-row";
+
         newScoreEl.textContent = "Initials: " + scoreObject[i].initials + " | Score: " + scoreObject[i].score;
         showScoresEl.appendChild(newScoreEl);
-        localStorage.setItem(i, JSON.stringify(scoreObject[i].score));
     }
+
+    initialFormEl.reset();
+}
+
+function clearScores() {
 
 }
 
@@ -222,3 +228,5 @@ setAnswerChoices();
 //splitAnswerChoices();
 answerEls.addEventListener('click', getInput);
 initialButtonEl.addEventListener('click', getInitials);
+//playAgainEl.addEventListener('click', window.location.reload());
+//viewScoresEl.addEventListener('click', clearScores);
