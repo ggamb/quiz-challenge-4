@@ -187,7 +187,7 @@ function getInitials(event) {
 
     gameOverEl.style.display = "flex";
     
-    //showScoresEl.textContent = "Initials: " + initials.value + " | Your Score: " + localStorage.getItem("score");
+    showScoresEl.textContent = "Initials: " + initials.value + " | Your Score: " + localStorage.getItem("score");
 
     showScores(initials.value, localStorage.getItem("score"));
 
