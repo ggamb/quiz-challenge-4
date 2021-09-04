@@ -12,10 +12,6 @@ header {
     margin: 25px 30%;
 }
 
-.score-results {
-    
-}
-
 .flex-row {
     display: flex;
     justify-content: space-between;
@@ -88,4 +84,15 @@ header {
     font-weight: bold;
     font-family: 'Courier New', Courier, monospace;
     padding-top: 10px;
+}
+
+
+.show-scores {
+    margin: 25px 30%;
+}
+
+.score-row {
+    width: 25px 30%;
+    height: fit-content;
+    background-color: lightblue;
 }

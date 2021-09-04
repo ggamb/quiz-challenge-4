@@ -16,6 +16,8 @@ var scoreResultsEl = document.getElementById("score-results");
 var quizEl = document.getElementById("quiz");
 var showInitialsEl = document.getElementById("showInitials").style;
 var initialButtonEl = document.getElementById("initialSubmit");
+var initials = document.getElementById("typeInitials");
+var showScoresEl = document.getElementById("scores");
 
 
 //Global variable to control which question appears
@@ -27,6 +29,8 @@ var increment = 10;
 var decrement = 10;
 
 //Other global variables
+var finalScore = 0;
+var scoresArray = [];
 
 
 //Array holding the questions for the quiz. Property answerChoices contains all answers for one question separated by a slash
@@ -80,12 +84,15 @@ function startGameTimer() {
 
     //Function to decrement and display the timer every 1 second
     var timerInterval = setInterval(function(){
+        finalScore = parseInt(timerEl.textContent);
         if(timeRemaining>=0){
             timerEl.textContent = "Seconds remaining: " + timeRemaining;
             timeRemaining--;
         } else {
             clearInterval(timerInterval);
-            getHighScore();
+            if(index < 4) {
+                getHighScore();
+            }
         }
     }, 1000);
 };
@@ -97,6 +104,7 @@ function setAnswerChoices() {
         questionEl.textContent = questionArray[index].question;
         splitAnswerChoices(questionArray[index].answerChoices);
     } else {
+        finalScore = timeRemaining;
         getHighScore();
     }
 
@@ -142,48 +150,70 @@ function getInput(event){
         quizEl.remove();
         console.log("we got here");
         showInitialsEl.display = "flex";
+        finalScore = timeRemaining;
+        getHighScore();
     }
 };
 
 //Loads the webpage with user's high scores
 function getHighScore(){    
+    var score = parseInt(finalScore);
     var highScore = localStorage.getItem("highscore");
-    var score = timeRemaining;
     if(highScore !== null){
         if (score > highScore) {
-            localStorage.setItem("highscore", score);      
+            localStorage.setItem("highscore", score);   
+            scoreResultsEl.textContent = "Congrats on the high score! Your new high hcore: " + score;
         }
     } else{
         localStorage.setItem("highscore", score);
+        scoreResultsEl.textContent = "High score: " + highScore;
     }
-    console.log(highScore);
-    console.log(score);
-
-};
-
-function loadScores(event) {
-    event.preventDefault();
 
     if(scoreResultsEl){
         scoreResultsEl.textContent = "High Score: " + localStorage.getItem("highscore");
         console.log(scoreResultsEl.textContent);
     }
+
+    getInitials();
+
+};
+
+function getInitials(event) { 
+
+    event.preventDefault();
+
+    if(initials.value !== ""){
+        initialButtonEl.removeEventListener("click", getInitials);
+    }
     
+    //showScoresEl.textContent = "Initials: " + initials.value + " | Your Score: " + finalScore;
+
+    showScores(initials.value, finalScore);
+
 }
 
+function showScores(userInitials, UserScore) {
+    console.log("made it to showScores");
 
+    var scoreObject = {
+        initials: userInitials,
+        score: UserScore
+    };
 
+    console.log(scoreObject);
 
+    scoresArray.push(scoreObject);
 
-function initialSubmit(event) {
-    var initials = document.getElementById("typeInitials").value;
-    var initialButtonEl = document.getElementById("initialSubmit");
-    console.log(initials);
-    initialButtonEl.onclick("click", function(){
-        event.preventDefault();
+    console.log(scoresArray);
 
-        getHighScore();
-    });
+    for(var i = 0; i < scoresArray.length; i++){
+        var newScoreEl = document.createElement("div");
+        newScoreEl.className = "score-row";
+        newScoreEl.textContent = "Initials: " + scoreObject[i].initials + " | Score: " + scoreObject[i].score;
+        showScoresEl.appendChild(newScoreEl);
+        localStorage.setItem(i, JSON.stringify(scoreObject[i].score));
+    }
+
 }
 
 //Listeners and functions to start posting questions
@@ -191,5 +221,4 @@ startButton.onclick = timerStart;
 setAnswerChoices();
 //splitAnswerChoices();
 answerEls.addEventListener('click', getInput);
-initialButtonEl.addEventListener('click', loadScores);
-
+initialButtonEl.addEventListener('click', getInitials);

@@ -46,7 +46,7 @@
             <form action="" >
                 <label></label>
                 <input type="text" id = "typeInitials" max="3">
-                <button id="initialSubmit">Submit</button>
+                <button id="initialSubmit" onclick="getInitials(); this.onclick=null;">Submit</button>
             </form>
         </div>
         <br/>
@@ -56,11 +56,13 @@
         <div id="high-scores">
             <form action=""></form>
         </div>
-
-
-    </div>
         
-    </body>
+    </div>
+    <div id = "scores" class="show-scores"></div>
+
+    
+        
+</body>
 
 
 
