@@ -20,7 +20,8 @@ var initials = document.getElementById("typeInitials");
 var showScoresEl = document.getElementById("scores");
 var initialFormEl = document.getElementById("initialForm");
 var playAgainEl = document.getElementById("play-again");
-var viewScoresEl = document.getElementById("view-scores");
+var viewScoresEl = document.getElementById("clear-scores");
+var gameOverEl = document.getElementById("game-over-buttons");
 
 //Global variable to control which question appears
 var index = 0;
@@ -183,43 +184,76 @@ function getInitials(event) {
 
     event.preventDefault();
     initialButtonEl.remove();
-    
-    showScoresEl.textContent = "Initials: " + initials.value + " | Your Score: " + localStorage.getItem("score");
 
-    showScores(initials.value, finalScore);
+    gameOverEl.style.display = "flex";
+    
+    //showScoresEl.textContent = "Initials: " + initials.value + " | Your Score: " + localStorage.getItem("score");
+
+    showScores(initials.value, localStorage.getItem("score"));
 
 }
 
 function showScores(userInitials, UserScore) {
-    console.log("made it to showScores");
+    console.log("made it to showScores", UserScore);
 
     var scoreObject = {
         initials: userInitials,
         score: UserScore
     };
+    
+    var showScoresArray = JSON.parse(localStorage.getItem("scoresArray")) || [];
 
-    console.log(scoreObject);
+    console.log("showScoresArray", showScoresArray);
 
-    scoresArray.push(scoreObject);
+    showScoresArray.push(scoreObject);
 
-    console.log(scoresArray);
+    localStorage.setItem("scoresArray", JSON.stringify(showScoresArray));
 
-    localStorage.setItem("scoresArray", JSON.stringify(scoresArray));
+    var loopArray = JSON.parse(localStorage.getItem("scoresArray"));
 
-    for(var i = 0; i < scoresArray.length; i++){
+    console.log(loopArray);
+
+    loopArray.sort(function(a,b) {
+        console.log(a);
+        console.log(b);
+        return b.score-a.score;
+    })
+
+    console.log(loopArray);
+
+    /*console.log("After push to scoresArray:", scoresArray);
+    debugger;
+    var showScoresArray = localStorage.getItem("scoresArray");
+
+    console.log("After getItem socresArray:", showScoresArray);
+
+    var jsonArray = JSON.parse(showScoresArray);
+
+    console.log("JSON", jsonArray); 
+
+    console.log("After JSON", showScoresArray);
+
+    localStorage.setItem("jsonArray", JSON.stringify(scoresArray));*/
+
+    initialFormEl.reset();
+
+    
+    for(var i = 0; i < loopArray.length; i++){
         console.log("we got to the loop");
         var newScoreEl = document.createElement("div");
         newScoreEl.className = "score-row";
 
-        newScoreEl.textContent = "Initials: " + scoreObject[i].initials + " | Score: " + scoreObject[i].score;
+        newScoreEl.textContent = "Initials: " + loopArray[i].initials + " | Score: " + loopArray[i].score;
         showScoresEl.appendChild(newScoreEl);
-    }
+    }   
+}
 
-    initialFormEl.reset();
+function playAgain() {
+    window.location.reload();
 }
 
 function clearScores() {
-
+    localStorage.setItem("scoresArray", JSON.stringify([]));
 }
 
 //Listeners and functions to start posting questions
@@ -228,5 +262,5 @@ setAnswerChoices();
 //splitAnswerChoices();
 answerEls.addEventListener('click', getInput);
 initialButtonEl.addEventListener('click', getInitials);
-//playAgainEl.addEventListener('click', window.location.reload());
-//viewScoresEl.addEventListener('click', clearScores);
+playAgainEl.addEventListener('click', playAgain);
+viewScoresEl.addEventListener('click', clearScores);
