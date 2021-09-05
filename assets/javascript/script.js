@@ -14,6 +14,7 @@ var answerResult = document.getElementById("answer-result");
 var playAgainEl = document.getElementById("goAgain");
 var scoreResultsEl = document.getElementById("score-results");
 var quizEl = document.getElementById("quiz");
+var initialsContainerEl = document.getElementById("initials-container");
 var showInitialsEl = document.getElementById("showInitials").style;
 var initialButtonEl = document.getElementById("initialSubmit");
 var initials = document.getElementById("typeInitials");
@@ -184,6 +185,8 @@ function getInitials(event) {
 
     event.preventDefault();
     initialButtonEl.remove();
+    initialsContainerEl.remove();
+    
 
     gameOverEl.style.display = "flex";
     
