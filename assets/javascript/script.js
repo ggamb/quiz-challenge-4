@@ -37,7 +37,7 @@ var finalScore = 0;
 var scoresArray = [];
 
 
-//Array holding the questions for the quiz. Property answerChoices contains all answers for one question separated by a slash
+//Array holding the questions for the quiz. The answerChoices property contains all answers for one question separated by a slash
 var questionArray = [
     {
         question: "What is your name?", 
@@ -99,7 +99,7 @@ function startGameTimer() {
             }
         }
     }, 1000);
-};
+}
 
 //Function to set the answer choices. If no questions remain in the question array, high scores are automatically loaded to local storage
 function setAnswerChoices() {
@@ -111,8 +111,7 @@ function setAnswerChoices() {
         finalScore = timeRemaining;
         getHighScore();
     }
-
-};
+}
 
 //Splits the question choices into different divs
 function splitAnswerChoices(selectedQuestion) {
@@ -125,7 +124,7 @@ function splitAnswerChoices(selectedQuestion) {
     answerElFive.textContent = words[4];
 
     return;
-};
+}
 
 //Function to handle and evaluate a user's choice via a click
 function getInput(event){
@@ -155,7 +154,7 @@ function getInput(event){
         localStorage.setItem("score", finalScore);
         getHighScore();
     }
-};
+}
 
 //Loads the webpage with user's high scores
 function getHighScore(){    
@@ -171,7 +170,7 @@ function getHighScore(){
     }
 
     scoreResultsEl.textContent = "High Score: " + localStorage.getItem("highscore");
-};
+}
 
 //Gets user's initlas and calls function to show other player's scores
 function getInitials(event) { 
