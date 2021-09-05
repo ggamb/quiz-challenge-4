@@ -64,9 +64,13 @@ header {
     padding-bottom: 20px;
 }
 
+#container {
+    width: 75%;
+}
+
 .answer-choice {
     border-radius: 30px;
-    width: 400px;
+    width: 300px;
     background-color: peru;
     margin: 10px;
     padding: 10px;
@@ -112,6 +116,7 @@ header {
     align-self: center;
     height: fit-content;
     background-color: lightblue;
+    width: 200px;
 }
 
 .score-row:nth-child(even) {
