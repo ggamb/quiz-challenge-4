@@ -1,4 +1,4 @@
-//Variables to selected HTML IDs
+//Variables to selected HTML IDs and classes
 var timerEl = document.getElementById("timer");
 var startButton = document.getElementById("start");
 var blockerEl = document.getElementById("block-questions");
@@ -13,12 +13,12 @@ var answerEls = document.querySelector(".container");
 var answerResult = document.getElementById("answer-result");
 var playAgainEl = document.getElementById("goAgain");
 var scoreResultsEl = document.getElementById("score-results");
+var showScoresEl = document.getElementById("scores");
 var quizEl = document.getElementById("quiz");
 var initialsContainerEl = document.getElementById("initials-container");
 var showInitialsEl = document.getElementById("showInitials").style;
 var initialButtonEl = document.getElementById("initialSubmit");
 var initials = document.getElementById("typeInitials");
-var showScoresEl = document.getElementById("scores");
 var initialFormEl = document.getElementById("initialForm");
 var playAgainEl = document.getElementById("play-again");
 var viewScoresEl = document.getElementById("clear-scores");
@@ -62,9 +62,9 @@ var questionArray = [
     }
 ];
 
-//starts joke timer and leads to function to start game timer
+//Starts joke timer and leads to function to start game timer
 function timerStart() {
-    var count = 3; //Change back to 1 after finishing
+    var count = 1;
     var timerInterval = setInterval(function(){
         if(count < 3){
             startButton.textContent = count;
@@ -118,7 +118,7 @@ function setAnswerChoices() {
 function splitAnswerChoices(selectedQuestion) {
     var words = selectedQuestion.split("/");
 
-    answerElOne.textContent = words[0]; //Make more scalable??
+    answerElOne.textContent = words[0];
     answerElTwo.textContent = words[1];
     answerElThree.textContent = words[2];
     answerElFour.textContent = words[3];
@@ -137,12 +137,10 @@ function getInput(event){
         timeRemaining += increment;
         answerResult.textContent = "Question " + (index+1) + " is correct! " + increment + " seconds added!";
         answerEls.appendChild(answerResult);
-        console.log("correct!");
     } else {
         timeRemaining -= decrement;
         answerResult.textContent = "Question " + (index+1) + " is incorrect! " + decrement + " seconds deducted!";
         answerEls.appendChild(answerResult);
-        console.log("false!");
     }
 
     //Increases index after the passthrough and calls setAnswerChoices() to set up the next question
@@ -152,7 +150,6 @@ function getInput(event){
         setAnswerChoices();
     } else {
         quizEl.remove();
-        console.log("we got here");
         showInitialsEl.display = "flex";
         finalScore = timeRemaining;
         localStorage.setItem("score", finalScore);
@@ -162,84 +159,69 @@ function getInput(event){
 
 //Loads the webpage with user's high scores
 function getHighScore(){    
-    console.log(finalScore);
     var score = parseInt(finalScore);
     var highScore = localStorage.getItem("highscore");
     if(highScore !== null){
         if (score > highScore) {
             localStorage.setItem("highscore", score);   
-            scoreResultsEl.textContent = "Congrats on the high score! Your new high score: " + score;
         }
     } else{
         localStorage.setItem("highscore", score);
         scoreResultsEl.textContent = "High score: " + highScore;
     }
 
-    if(scoreResultsEl){
-        scoreResultsEl.textContent = "High Score: " + localStorage.getItem("highscore");
-        console.log(scoreResultsEl.textContent);
-    }
+    scoreResultsEl.textContent = "High Score: " + localStorage.getItem("highscore");
 };
 
+//Gets user's initlas and calls function to show other player's scores
 function getInitials(event) { 
 
     event.preventDefault();
     initialButtonEl.remove();
     initialsContainerEl.remove();
-    
 
     gameOverEl.style.display = "flex";
     
+    showScoresEl.style.textAlign = "center";
+    showScoresEl.style.padding = "15px";
     showScoresEl.textContent = "You finished with a score of " + localStorage.getItem("score") + "!";
-
+    
     showScores(initials.value, localStorage.getItem("score"));
 }
 
+//Shows scores after getting user initials
 function showScores(userInitials, UserScore) {
-    console.log("made it to showScores", UserScore);
 
+    //Creates score object holding player initials and score
     var scoreObject = {
         initials: userInitials,
         score: UserScore
     };
     
+    //Parses local storage array into objects showing previous scores
+    //Or creates the array if no scores are in local storage
     var showScoresArray = JSON.parse(localStorage.getItem("scoresArray")) || [];
 
-    console.log("showScoresArray", showScoresArray);
-
+    //Pushes new user score to the array
     showScoresArray.push(scoreObject);
 
+    //Sets local storage with new user score
     localStorage.setItem("scoresArray", JSON.stringify(showScoresArray));
 
+    //Gets the array in local storage with new user score and parses it into objects
+    //This array is used below to display all user scores
     var loopArray = JSON.parse(localStorage.getItem("scoresArray"));
 
-    console.log(loopArray);
-
+    //Sorts the array from low to high before displaying
     loopArray.sort(function(a,b) {
         console.log(a);
         console.log(b);
         return b.score-a.score;
     })
 
-    console.log(loopArray);
-
-    /*console.log("After push to scoresArray:", scoresArray);
-    debugger;
-    var showScoresArray = localStorage.getItem("scoresArray");
-
-    console.log("After getItem socresArray:", showScoresArray);
-
-    var jsonArray = JSON.parse(showScoresArray);
-
-    console.log("JSON", jsonArray); 
-
-    console.log("After JSON", showScoresArray);
-
-    localStorage.setItem("jsonArray", JSON.stringify(scoresArray));*/
-
     initialFormEl.reset();
 
-    
+    //Displays user scores in order from high to low
     for(var i = 0; i < loopArray.length; i++){
         console.log("we got to the loop");
         var newScoreEl = document.createElement("div");
@@ -250,18 +232,19 @@ function showScores(userInitials, UserScore) {
     }   
 }
 
+//Reloads the page so the user can play again
 function playAgain() {
     window.location.reload();
 }
 
+//Clears local storage by replacing it with an empty array
 function clearScores() {
     localStorage.setItem("scoresArray", JSON.stringify([]));
 }
 
-//Listeners and functions to start posting questions
+//Listeners and functions to start posting questions and play the game
 startButton.onclick = timerStart;
 setAnswerChoices();
-//splitAnswerChoices();
 answerEls.addEventListener('click', getInput);
 initialButtonEl.addEventListener('click', getInitials);
 playAgainEl.addEventListener('click', playAgain);

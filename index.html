@@ -9,14 +9,14 @@
 </head>
 
 <body>
+    <!--To display the questions and answers. To be removed at end game-->
     <div id = "quiz">
         <header class="flex-row">
             <div>
-                <a href="./assets/html/score.html">View High Scores</a>
+                🐰💣
             </div>
             <h2 id="timer"></h2>
         </header>
-
             <div>
                 <h3 class="count-of-three">
                     Push the start button and on the count of three, no more, no less, 
@@ -40,35 +40,27 @@
     </div>
     <br/>
 
+    <!--Form to enter initials-->
     <div id="showInitials" class="hidden">
         <div id="initials-container">
-            Your initials here:
+            Your initials here (Four characters max):
             <form action="" id="initialForm">
                 <label></label>
-                <input type="text" id = "typeInitials" max="3">
+                <input type="text" id = "typeInitials" maxlength="4">
                 <button id="initialSubmit">Submit</button>
             </form>
         </div>
         <br/>
-         
         <div id="score-results" class="score-results"></div>
-       
     </div>
     
+    <!--Where scores and end game buttons are shown-->
     <div id = "scores" class="show-scores"></div>
     <span id="game-over-buttons" class="hidden">
         <button id="play-again"> Play Again</button>
         <button id="clear-scores">Clear Scores</button>
     </span>
-    
-    
 
-    
-        
 </body>
-
-
-
-
     <script src = "./assets/javascript/script.js"></script>
 </html>
