@@ -12,7 +12,7 @@ None! Click this link: https://ggamb.github.io/quiz-challenge-4/
 
 ## Deployed Project
 
-Check out this screenshot: [my website](https://user-images.githubusercontent.com/86434738/132129721-6a60202f-1ccd-4ada-8f10-9a73173b5185.png)
+Check out this screenshot: ![screenshot](https://user-images.githubusercontent.com/86434738/132129721-6a60202f-1ccd-4ada-8f10-9a73173b5185.png)
 
 ## Credits
 
